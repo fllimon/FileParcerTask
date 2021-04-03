@@ -11,13 +11,13 @@ namespace FileParcerView
             Parcer fileParcer = new FileParcer();
             Analyzer analyzer = new Analyzer(fileParcer);
 
-            //fileParcer.CountOccurrenceString(DefaultSettings.DEFAULT_FILE_PATH, "sit");
+            fileParcer.CountOccurrenceString(DefaultSettings.DEFAULT_FILE_PATH, "she");
 
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
 
-            fileParcer.ChangeStringInFile(DefaultSettings.DEFAULT_FILE_PATH, "'What shall I do?'", "'do I shell What?'"); //'What shall I do?'
+            fileParcer.ChangeStringInFile(DefaultSettings.DEFAULT_FILE_PATH, "Her parents", "parents Her");
 
             stopwatch.Stop();
 
@@ -27,6 +27,9 @@ namespace FileParcerView
 
             Console.WriteLine();
             Console.WriteLine($"Count text replace: {analyzer.CountTextReplace}");
+
+            Console.WriteLine();
+            Console.WriteLine($"Count substring in text: {analyzer.CountWords}");
 
             Console.ReadKey();
         }
