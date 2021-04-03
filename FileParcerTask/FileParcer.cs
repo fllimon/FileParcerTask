@@ -45,15 +45,11 @@ namespace FileParcerTask
 
                 while ((line = sr.ReadLine()) != null)    
                 {
-                    string[] source = line.Split(' ');
-
-                    foreach (string item in source)
+                    if (line.Contains(words))
                     {
-                        if (item.Equals(words))
-                        {
-                            OnCountOccurance(item, words);
-                        }
+                        OnCountOccurance(line, words);
                     }
+
                 }
             }
         }
