@@ -13,6 +13,7 @@ namespace FileParcerView
         #region =========-------- PRIVATE DATA ---------==========
 
         private int _countWords = 0;
+        private int _countReplacetext = 0;
         private readonly Parcer _fileParcer;
 
         #endregion
@@ -24,6 +25,7 @@ namespace FileParcerView
             _fileParcer = fileParcer;
 
             _fileParcer.CountOccurrence += GetCountWords;
+            _fileParcer.ReplaceTextInFile += GetCountTextReplace;
         }
 
         #endregion
@@ -38,11 +40,24 @@ namespace FileParcerView
             }
         }
 
+        public int CountTextReplace
+        {
+            get
+            {
+                return _countReplacetext;
+            }
+        }
+
         #endregion
 
         private void GetCountWords(object sender, CountWordsEventArgs args)
         {
             _countWords++;
+        }
+
+        private void GetCountTextReplace(object sender, ReplaceTextEventArgs args)
+        {
+            _countReplacetext++;
         }
     }
 }

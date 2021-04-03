@@ -11,6 +11,7 @@ namespace FileParcerTask
         #region ========------- PROTECTED DATA ---------========
 
         protected CountOccurrence _countOccurrence;
+        protected ReplaceTextInFile _replaceTextInFile;
 
         #endregion
 
@@ -28,17 +29,37 @@ namespace FileParcerTask
             }
         }
 
+        public event ReplaceTextInFile ReplaceTextInFile
+        {
+            add
+            {
+                _replaceTextInFile += value;
+            }
+            remove
+            {
+                _replaceTextInFile -= value;
+            }
+        }
+
         #endregion
 
         public abstract void CountOccurrenceString(string filePath, string countingLine);
 
-        public abstract bool ChangeStringInFile(string filePath, string searchString, string replaceString);
+        public abstract void ChangeStringInFile(string filePath, string searchString, string replaceString);
 
         protected virtual void OnCountOccurance(string firstWord, string secondWord)
         {
             if (_countOccurrence != null)
             {
                 _countOccurrence(this, new CountWordsEventArgs(firstWord, secondWord));
+            }
+        }
+
+        protected virtual void OnCountReplaceString(string searchString, string replaceString)
+        {
+            if (_replaceTextInFile != null)
+            {
+                _replaceTextInFile(this, new ReplaceTextEventArgs(searchString, replaceString));
             }
         }
     }
