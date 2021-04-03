@@ -34,14 +34,12 @@ namespace FileParcerTask
 
         public abstract bool ChangeStringInFile(string filePath, string searchString, string replaceString);
 
-        protected virtual bool OnCountOccurance(string firstWord, string secondWord)
+        protected virtual void OnCountOccurance(string firstWord, string secondWord)
         {
             if (_countOccurrence != null)
             {
                 _countOccurrence(this, new CountWordsEventArgs(firstWord, secondWord));
             }
-
-            return firstWord.Equals(secondWord);
         }
     }
 }
