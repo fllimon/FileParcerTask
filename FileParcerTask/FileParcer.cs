@@ -19,23 +19,10 @@ namespace FileParcerTask
                 {
                     using (StreamReader reader = new StreamReader(filePath))
                     {
-
                         StreamWriter writer = new StreamWriter(createFile);
-
-                        while ((currentText = reader.ReadLine()) != null)
-                        {
-                            if (currentText.Contains(searchString))
-                            {
-                                OnCountReplaceString(currentText, replaceString);
-
-                                currentText = currentText.Replace(searchString, replaceString);
-                            }
-
-                            writer.WriteLine(currentText);
-                        }
+                        currentText = WriteLineInTemporaryFile(searchString, replaceString, reader, writer);
                     }
                 }
-
 
                 if (File.Exists(filePath))
                 {
@@ -48,6 +35,25 @@ namespace FileParcerTask
             {
                 throw ex;
             }
+        }
+
+        private string WriteLineInTemporaryFile(string searchString, string replaceString, StreamReader reader, StreamWriter writer)
+        {
+            string currentText;
+
+            while ((currentText = reader.ReadLine()) != null)
+            {
+                if (currentText.Contains(searchString))
+                {
+                    OnCountReplaceString(currentText, replaceString);
+
+                    currentText = currentText.Replace(searchString, replaceString);
+                }
+
+                writer.WriteLine(currentText);
+            }
+
+            return currentText;
         }
 
         private string GetFileName(string path)
