@@ -13,28 +13,48 @@ namespace FileParcerTask
             {
                 string currentText = string.Empty;
 
-                using (var fileStream = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                string currentFileName = GetFileName(filePath);
+
+                using (FileStream createFile = new FileStream(DefaultSettings.TEMPORARY_FILE, FileMode.OpenOrCreate))
                 {
-                    StreamReader reader = new StreamReader(fileStream);
-                    StreamWriter writer = new StreamWriter(fileStream);
-
-                    while ((currentText = reader.ReadLine()) != null)
+                    using (StreamReader reader = new StreamReader(filePath))
                     {
-                        if (currentText.Contains(searchString))
+
+                        StreamWriter writer = new StreamWriter(createFile);
+
+                        while ((currentText = reader.ReadLine()) != null)
                         {
-                            OnCountReplaceString(currentText, replaceString);
+                            if (currentText.Contains(searchString))
+                            {
+                                OnCountReplaceString(currentText, replaceString);
 
-                            currentText = currentText.Replace(searchString, replaceString);
+                                currentText = currentText.Replace(searchString, replaceString);
+                            }
+
+                            writer.WriteLine(currentText);
                         }
-
-                        writer.Write(currentText);
                     }
                 }
+
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
+                File.Move(DefaultSettings.TEMPORARY_FILE, currentFileName);
             }
             catch (IOException ex)
             {
                 throw ex;
             }
+        }
+
+        private string GetFileName(string path)
+        {
+            DirectoryInfo info = new DirectoryInfo(path);
+
+            return info.Name;
         }
 
         public override void CountOccurrenceString(string filePath, string words)

@@ -17,7 +17,7 @@ namespace FileParcerView
 
             stopwatch.Start();
 
-            fileParcer.ChangeStringInFile(DefaultSettings.DEFAULT_FILE_PATH, "Her parents", "parents Her");
+            fileParcer.ChangeStringInFile(DefaultSettings.DEFAULT_FILE_PATH, "India", "123456789");
 
             stopwatch.Stop();
 
